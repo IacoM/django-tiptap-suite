@@ -130,29 +130,36 @@ python manage.py runserver
 ```
 Visit `/admin/` to write with the Notion-like editor!
 
----
-
 ## Rendering Content in Frontend Templates
 
-When displaying the saved HTML content in your public-facing frontend templates, keep in mind:
+Since the editor is headless, the output HTML does not come with CSS styles. To render the HTML beautifully without writing custom CSS, the library provides a **built-in stylesheet** and a **custom template filter** that automatically wraps your content:
 
-1. **Security**: By default, Django escapes HTML to prevent XSS. You must use the `|safe` filter to render the HTML markup.
-2. **Styling**: Since the editor is headless, the output HTML doesn't come with CSS. To make it look identical to the editor's design, wrap your output in a container with a class (e.g., `tiptap-content`) and apply matching typography rules:
+### 1. Link the Built-in Stylesheet
+Include the packaged stylesheet in the `<head>` of your public template (e.g. `base.html`):
 
-### Template Example:
 ```html
-<!-- document_detail.html -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'django_tiptap_suite/tiptap-content.css' %}">
+```
+
+### 2. Render Content Using `tiptap_safe`
+In your detail template, load the template tags and use the `tiptap_safe` filter to display the content. This filter automatically wraps the output inside a `<div class="tiptap-content">` container and marks it as safe (meaning no extra tags or wrappers are needed):
+
+```html
 {% extends "base.html" %}
+{% load django_tiptap_suite %}
 
 {% block content %}
   <h1>{{ document.title }}</h1>
   
-  <!-- Wrap the HTML content in the tiptap-content class -->
-  <div class="tiptap-content">
-    {{ document.body|safe }}
-  </div>
+  <!-- Automatically wraps the HTML inside the styled container -->
+  {{ document.body|tiptap_safe }}
 {% endblock %}
 ```
+
+---
+
+### Alternative: Manual Wrapping & Custom CSS
 
 ### Recommended Stylesheet for Your Public Frontend:
 Add this simple CSS block to your public site's stylesheet to render the output with beautiful, clean Notion-like typography:
