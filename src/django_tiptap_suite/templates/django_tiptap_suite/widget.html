@@ -1,0 +1,29 @@
+<div class="tiptap-suite-wrapper" id="wrapper-{{ widget.attrs.id }}">
+  <textarea 
+    name="{{ widget.name }}" 
+    id="{{ widget.attrs.id }}" 
+    style="display: none;" 
+    {% include "django/forms/widgets/attrs.html" %}>{{ widget.value }}</textarea>
+  
+  <div id="tiptap-container-{{ widget.attrs.id }}" class="django-tiptap-suite-editor tiptap-suite-container"></div>
+</div>
+
+<script>
+  (function() {
+    function init() {
+      if (window.initTiptapSuite) {
+        window.initTiptapSuite(
+          '{{ widget.attrs.id }}', 
+          '{% url "django_tiptap_suite:upload_image" %}',
+          '{{ csrf_token }}',
+          {{ widget.config|default:"{}"|safe }}
+        );
+      }
+    }
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      init();
+    } else {
+      document.addEventListener('DOMContentLoaded', init);
+    }
+  })();
+</script>

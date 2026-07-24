@@ -1,0 +1,25 @@
+{
+  "name": "django-tiptap-suite-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@tiptap/core": "^2.2.0",
+    "@tiptap/extension-bubble-menu": "^2.2.0",
+    "@tiptap/extension-code-block-lowlight": "^2.2.0",
+    "@tiptap/extension-image": "^2.2.0",
+    "@tiptap/extension-link": "^2.2.0",
+    "@tiptap/extension-placeholder": "^2.2.0",
+    "@tiptap/suggestion": "^2.2.0",
+    "@tiptap/starter-kit": "^2.2.0",
+    "lowlight": "^3.1.0",
+    "lucide": "^0.300.0",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

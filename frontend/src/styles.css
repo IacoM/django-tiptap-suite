@@ -1,0 +1,372 @@
+/* Notion-like Editor Core Container */
+.django-tiptap-suite-editor {
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  margin-bottom: 1.5rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  color: #37352f;
+}
+
+.django-tiptap-suite-editor:focus-within {
+  border-color: #2eaadc;
+  box-shadow: 0 0 0 3px rgba(46, 170, 220, 0.2);
+}
+
+/* Notion-like Top Fixed Toolbar */
+.tiptap-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+  background-color: #fcfbfa;
+}
+
+.tiptap-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: rgba(55, 53, 47, 0.65);
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.tiptap-toolbar-btn:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+  color: #37352f;
+}
+
+.tiptap-toolbar-btn.active {
+  background-color: rgba(46, 170, 220, 0.15);
+  color: #2eaadc;
+}
+
+.tiptap-toolbar-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Notion-like Floating Bubble Menu */
+.tiptap-bubble-menu {
+  display: flex;
+  background-color: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 6px;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  gap: 2px;
+  z-index: 1000;
+}
+
+.tiptap-bubble-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: rgba(55, 53, 47, 0.65);
+  transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.tiptap-bubble-btn:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+  color: #37352f;
+}
+
+.tiptap-bubble-btn.active {
+  background-color: rgba(46, 170, 220, 0.15);
+  color: #2eaadc;
+}
+
+.tiptap-bubble-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ProseMirror Placeholder */
+.tiptap-editor-content-wrapper .ProseMirror p.is-empty:first-child::before,
+.tiptap-editor-content-wrapper .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: rgba(55, 53, 47, 0.35);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Editor Typographic Space */
+.tiptap-editor-content-wrapper {
+  color: #37352f;
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+.tiptap-editor-content-wrapper .ProseMirror {
+  padding: 1.25rem;
+  min-height: 250px;
+  outline: none;
+}
+
+.tiptap-editor-content-wrapper p {
+  margin: 0 0 0.75rem 0;
+}
+
+.tiptap-editor-content-wrapper p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap-editor-content-wrapper h1,
+.tiptap-editor-content-wrapper h2,
+.tiptap-editor-content-wrapper h3 {
+  color: #37352f;
+  font-weight: 600;
+  margin-top: 1.6rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.tiptap-editor-content-wrapper h1 { font-size: 1.85rem; }
+.tiptap-editor-content-wrapper h2 { font-size: 1.45rem; }
+.tiptap-editor-content-wrapper h3 { font-size: 1.2rem; }
+
+/* Lists styling to override Django admin resets */
+.tiptap-editor-content-wrapper ul,
+.tiptap-editor-content-wrapper ol {
+  margin: 0 0 1rem 1.5rem !important;
+  padding-left: 0 !important;
+}
+
+.tiptap-editor-content-wrapper ul {
+  list-style-type: disc !important;
+}
+
+.tiptap-editor-content-wrapper ol {
+  list-style-type: decimal !important;
+}
+
+.tiptap-editor-content-wrapper li {
+  margin-bottom: 0.25rem !important;
+  display: list-item !important;
+  list-style: inherit !important;
+}
+
+.tiptap-editor-content-wrapper li p {
+  margin: 0;
+}
+
+/* Callout Box / Blockquote Notion style */
+.tiptap-editor-content-wrapper blockquote {
+  border-left: 3px solid rgba(55, 53, 47, 0.3);
+  padding: 0.5rem 1rem;
+  margin: 1rem 0;
+  background-color: rgba(55, 53, 47, 0.03);
+  border-radius: 0 4px 4px 0;
+  color: rgba(55, 53, 47, 0.8);
+}
+
+/* Links style */
+.tiptap-editor-content-wrapper a {
+  color: #2eaadc;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tiptap-editor-content-wrapper a:hover {
+  color: #1a8ab4;
+}
+
+/* Images style */
+.tiptap-editor-content-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1rem 0;
+  display: block;
+}
+
+/* Code block highlight (dark-theme Notion style) */
+.tiptap-editor-content-wrapper pre {
+  background-color: #272822;
+  color: #f8f8f2;
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+
+/* Inline Code style */
+.tiptap-editor-content-wrapper :not(pre) > code {
+  background-color: rgba(135, 131, 120, 0.15);
+  color: #eb5757;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.tiptap-editor-content-wrapper code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* Horizontal Rule style */
+.tiptap-editor-content-wrapper hr {
+  border: none;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+  margin: 1.5rem 0;
+}
+
+/* Slash Popup Styles */
+.tiptap-slash-menu {
+  background: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 15, 15, 0.1);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 10000;
+}
+
+.tiptap-slash-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 6px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  gap: 12px;
+  transition: background-color 0.1s ease;
+}
+
+.tiptap-slash-item:hover,
+.tiptap-slash-item.selected {
+  background-color: rgba(55, 53, 47, 0.05);
+}
+
+.tiptap-slash-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #ffffff;
+  border: 1px solid rgba(55, 53, 47, 0.08);
+  border-radius: 6px;
+  color: rgba(55, 53, 47, 0.8);
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.tiptap-slash-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.tiptap-slash-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.tiptap-slash-text strong {
+  font-size: 0.875rem;
+  color: #37352f;
+  font-weight: 500;
+}
+
+.tiptap-slash-desc {
+  font-size: 0.75rem;
+  color: rgba(55, 53, 47, 0.5);
+  margin-top: 2px;
+}
+
+/* Tippy JS Styling Reset */
+.tippy-box {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.tippy-content {
+  padding: 0 !important;
+}
+
+/* Dark mode compatibility inside Django Admin interface */
+@media (prefers-color-scheme: dark) {
+  .django-tiptap-suite-editor {
+    background-color: #191919;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #e3e3e3;
+  }
+  .tiptap-editor-toolbar {
+    background-color: #202020;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .tiptap-toolbar-btn {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .tiptap-toolbar-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+  .tiptap-editor-content-wrapper {
+    color: #e3e3e3;
+  }
+  .tiptap-editor-content-wrapper .ProseMirror p.is-empty:first-child::before,
+  .tiptap-editor-content-wrapper .ProseMirror p.is-editor-empty:first-child::before {
+    color: rgba(255, 255, 255, 0.38);
+  }
+  .tiptap-editor-content-wrapper :not(pre) > code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ff7b72;
+  }
+  .tiptap-editor-content-wrapper h1,
+  .tiptap-editor-content-wrapper h2,
+  .tiptap-editor-content-wrapper h3 {
+    color: #ffffff;
+  }
+  .tiptap-editor-content-wrapper blockquote {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-left-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+  }
+  .tiptap-editor-content-wrapper hr {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+  .tiptap-slash-menu {
+    background: #1f1f1f;
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .tiptap-slash-item strong {
+    color: #e3e3e3;
+  }
+  .tiptap-slash-item:hover,
+  .tiptap-slash-item.selected {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  .tiptap-slash-icon {
+    background-color: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+}
