@@ -1,5 +1,9 @@
 # Django Tiptap Suite
 
+<p align="center">
+  <img src="docs/images/logo.png" alt="Django Tiptap Suite Logo" width="150" height="150">
+</p>
+
 [![PyPI version](https://img.shields.io/pypi/v/django-tiptap-suite.svg)](https://pypi.org/project/django-tiptap-suite/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
