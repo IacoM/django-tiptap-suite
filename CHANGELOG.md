@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.5] - 2026-07-27
+
+### Fixed
+- **JSON Serialization**: Corretta la serializzazione della configurazione del widget in formato JSON valido prima di inviarla al template HTML, risolvendo il problema di visualizzazione dell'editor in presenza di liste o booleani in `TIPTAP_SUITE_CONFIG`.
+
 ## [1.0.4] - 2026-07-27
 
 ### Added

@@ -1,3 +1,4 @@
+import json
 from django import forms
 from django.forms.widgets import Media
 from .conf import TIPTAP_SUITE_CONFIG
@@ -19,5 +20,5 @@ class TiptapEditorWidget(forms.Widget):
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         context["widget"]["value"] = value or ""
-        context["widget"]["config"] = self.config
+        context["widget"]["config"] = json.dumps(self.config)
         return context

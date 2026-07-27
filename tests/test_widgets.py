@@ -10,6 +10,7 @@ def test_widget_rendering():
     assert 'Hello &lt;b&gt;world&lt;/b&gt;' in html
     assert 'window.initTiptapSuite' in html
     assert 'test-editor' in html
+    assert '"placeholder": "Write something..."' in html
 
 def test_widget_media():
     widget = TiptapEditorWidget()

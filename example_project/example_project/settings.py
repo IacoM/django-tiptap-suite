@@ -61,3 +61,26 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static_root'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+TIPTAP_SUITE_CONFIG = {
+    # Custom placeholder text
+    "placeholder": "Type '/' for commands or start writing...",
+    
+    # Enable/disable specific Tiptap extensions
+    "enabled_extensions": [
+        "bold", "italic", "underline", "strike", "heading",
+        "bulletList", "orderedList", "blockquote", "codeBlock",
+        "link", "image", "textAlign", "table", "taskList"
+    ],
+    
+    # Hide the '/' slash commands menu entirely
+    "disable_slash_commands": False,
+    
+    # Style customization
+    "inject_css": True,                 # Auto-injects default CSS styles when rendering HTML
+    "css_class": "tiptap-content",      # The wrapper CSS class name
+    
+    # Image upload configuration
+    "image_upload_path": "tiptap_uploads/%Y/%m",  # Custom datetime formatted upload path
+    "image_max_size": 5 * 1024 * 1024,             # Max upload size limit (e.g. 5MB)
+}
