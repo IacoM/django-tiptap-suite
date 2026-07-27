@@ -16,12 +16,16 @@ A modern, high-quality, and feature-complete rich text editor for Django based o
 ## Features
 
 - 🦄 **Modern UI/UX**: Designed to look like Notion, Ghost, and Linear—no legacy 2010s rich-text container vibes.
-- ⚡ **Slash Command Menu (`/`)**: Type `/` to open a quick-access dropdown for headings, lists, quotes, dividers, and images.
+- ⚡ **Slash Command Menu (`/`)**: Type `/` to open a quick-access dropdown for headings, lists, quotes, dividers, tables, and images.
 - 💬 **Bubble Menu**: A floating formatting context menu that automatically appears when selecting text.
+- 📊 **Rich Table Support**: Insert and edit fully-featured tables with header rows directly from the toolbar or `/` menu.
+- 📝 **Task Lists**: Add checkbox task lists for interactive notes.
+- 🔠 **Underline & Text Align**: Format text with underline and align left, center, right, or justify.
+- 🖥️ **Fullscreen Mode**: Switch the editor to screen-filling focus mode with a single click.
 - 🎨 **Dark Mode Native**: Automatically detects and adapts to the Django Admin light/dark modes.
-- 🖼️ **CSRF-Safe Local Image Uploads**: Built-in drag-and-drop & file selection image uploads synced securely to Django's file storage.
+- 🖼️ **CSRF-Safe Local Image Uploads**: Secure drag-and-drop & file uploads with file size limit validation and configurable date-based directory paths.
 - ⚙️ **Zero Configuration**: Works out of the box with standard Django forms and model fields.
-- 🛠️ **Configurable**: Define global styles, placeholders, and widget behaviors via Django Settings.
+- 🛠️ **Configurable**: Define global styles, placeholders, enabled extensions, and image upload limits via Django Settings.
 
 ---
 
@@ -98,13 +102,32 @@ class PostForm(forms.ModelForm):
 
 ## Customization & Configuration
 
-You can globally configure default settings for the editor by adding `TIPTAP_SUITE_CONFIG` to your `settings.py`:
+You can globally configure settings for the editor by adding `TIPTAP_SUITE_CONFIG` to your `settings.py`:
 
 ```python
 # settings.py
 
 TIPTAP_SUITE_CONFIG = {
+    # Custom placeholder text
     "placeholder": "Type '/' for commands or start writing...",
+    
+    # Enable/disable specific Tiptap extensions
+    "enabled_extensions": [
+        "bold", "italic", "underline", "strike", "heading",
+        "bulletList", "orderedList", "blockquote", "codeBlock",
+        "link", "image", "textAlign", "table", "taskList"
+    ],
+    
+    # Hide the '/' slash commands menu entirely
+    "disable_slash_commands": False,
+    
+    # Style customization
+    "inject_css": True,                 # Auto-injects default CSS styles when rendering HTML
+    "css_class": "tiptap-content",      # The wrapper CSS class name
+    
+    # Image upload configuration
+    "image_upload_path": "tiptap_uploads/%Y/%m",  # Custom datetime formatted upload path
+    "image_max_size": 5 * 1024 * 1024,             # Max upload size limit (e.g. 5MB)
 }
 ```
 

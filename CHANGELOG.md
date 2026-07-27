@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.4] - 2026-07-27
+
+### Added
+- **Dynamic Configuration (Proxy)**: Introduzione di un recupero dinamico dei settings tramite Proxy in `conf.py` (utile anche per i test di unità).
+- **Nuove Estensioni Tiptap**: Supporto a Tabelle, Task List, Underline e Text Align.
+- **Modalità Fullscreen**: Bottone dedicato per estendere l'editor a tutto schermo.
+- **Validazione grandezza e percorsi dinamici immagini**: Supporto a `image_max_size` e `image_upload_path` (con cartelle basate su data) in `views.py`.
+- **Test di unità**: Aggiunti e corretti test in `tests/test_views.py` per testare le nuove funzionalità.
+
 ## [1.0.3] - 2026-07-27
 
 ### Added

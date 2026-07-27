@@ -132,6 +132,39 @@ Visit `/admin/` to write with the Notion-like editor!
 
 ---
 
+## Customization & Configuration
+
+You can globally customize the behavior of the editor by adding `TIPTAP_SUITE_CONFIG` to your `settings.py`:
+
+```python
+# settings.py
+
+TIPTAP_SUITE_CONFIG = {
+    # Custom placeholder text when the editor is empty
+    "placeholder": "Type '/' for commands or start writing...",
+    
+    # Choose which extensions to enable. Remove items to disable features.
+    "enabled_extensions": [
+        "bold", "italic", "underline", "strike", "heading",
+        "bulletList", "orderedList", "blockquote", "codeBlock",
+        "link", "image", "textAlign", "table", "taskList"
+    ],
+    
+    # Disable the "/" popover menu entirely if set to True
+    "disable_slash_commands": False,
+    
+    # Styling options
+    "inject_css": True,                 # Auto-injects CSS styles on str(HTMLField) evaluation
+    "css_class": "tiptap-content",      # The wrapper CSS class used when rendering HTML
+    
+    # Image uploads settings
+    "image_upload_path": "tiptap_uploads/%Y/%m",  # Directory structure for uploads
+    "image_max_size": 5 * 1024 * 1024,             # Max file size in bytes (e.g., 5MB limit)
+}
+```
+
+---
+
 ## Rendering Content in Frontend Templates
 
 When displaying the saved HTML content in your public-facing frontend templates, keep in mind:
@@ -155,7 +188,7 @@ When displaying the saved HTML content in your public-facing frontend templates,
 ```
 
 ### Recommended Stylesheet for Your Public Frontend:
-Add this simple CSS block to your public site's stylesheet to render the output with beautiful, clean Notion-like typography:
+Add this CSS block to your public site's stylesheet to render the output with beautiful, clean Notion-like typography and layouts:
 
 ```css
 /* Public frontend styling for Tiptap generated HTML */
@@ -219,5 +252,59 @@ Add this simple CSS block to your public site's stylesheet to render the output 
   max-width: 100%;
   height: auto;
   border-radius: 6px;
+}
+
+/* Alignments */
+.tiptap-content [style*="text-align: right"] { text-align: right; }
+.tiptap-content [style*="text-align: center"] { text-align: center; }
+.tiptap-content [style*="text-align: justify"] { text-align: justify; }
+.tiptap-content [style*="text-align: left"] { text-align: left; }
+
+/* Tables styling */
+.tiptap-content table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 1rem 0;
+  overflow: hidden;
+}
+
+.tiptap-content td, .tiptap-content th {
+  min-width: 1em;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  padding: 6px 8px;
+  vertical-align: top;
+  box-sizing: border-box;
+}
+
+.tiptap-content th {
+  font-weight: 600;
+  text-align: left;
+  background-color: rgba(55, 53, 47, 0.03);
+}
+
+/* Task lists styling */
+.tiptap-content ul[data-type="taskList"] {
+  list-style: none !important;
+  padding: 0 !important;
+  margin-left: 0.5rem !important;
+}
+
+.tiptap-content ul[data-type="taskList"] li {
+  display: flex !important;
+  align-items: flex-start;
+  margin-bottom: 0.25rem !important;
+}
+
+.tiptap-content ul[data-type="taskList"] li > label {
+  margin-right: 0.5rem;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.tiptap-content ul[data-type="taskList"] li > div {
+  flex: 1;
 }
 ```
