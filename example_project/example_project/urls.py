@@ -6,4 +6,5 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tiptap/', include('django_tiptap_suite.urls', namespace='django_tiptap_suite')),
+    path('', include('demo.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
