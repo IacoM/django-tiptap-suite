@@ -576,6 +576,13 @@ window.initTiptapSuite = function(editorId, uploadUrl, csrfToken, config) {
   container.appendChild(bubbleMenuEl);
   container.appendChild(editorWrapper);
 
+  if (config.version) {
+    const versionEl = document.createElement('div');
+    versionEl.className = 'tiptap-editor-version';
+    versionEl.innerText = `django-tiptap-suite v${config.version}`;
+    container.appendChild(versionEl);
+  }
+
   const extensions = [
     StarterKit.configure({
       codeBlock: false,

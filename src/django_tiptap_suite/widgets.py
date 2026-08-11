@@ -18,7 +18,10 @@ class TiptapEditorWidget(forms.Widget):
         )
 
     def get_context(self, name, value, attrs):
+        from . import __version__
         context = super().get_context(name, value, attrs)
         context["widget"]["value"] = value or ""
-        context["widget"]["config"] = json.dumps(self.config)
+        config_with_version = {**self.config, "version": __version__}
+        context["widget"]["config"] = json.dumps(config_with_version)
+        context["widget"]["version"] = __version__
         return context

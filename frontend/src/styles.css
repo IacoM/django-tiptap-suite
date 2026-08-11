@@ -469,3 +469,22 @@
   height: calc(100vh - 45px) !important;
   overflow-y: auto !important;
 }
+
+/* Version Label style */
+.tiptap-editor-version {
+  font-size: 10px;
+  color: rgba(55, 53, 47, 0.4);
+  text-align: right;
+  padding: 4px 12px;
+  border-top: 1px solid rgba(55, 53, 47, 0.05);
+  background-color: #fcfbfa;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.django-tiptap-suite-editor.fullscreen-mode .tiptap-editor-version {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
