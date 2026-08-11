@@ -76,6 +76,9 @@ TIPTAP_SUITE_CONFIG = {
     # Hide the '/' slash commands menu entirely
     "disable_slash_commands": False,
     
+    # Hide the image button/upload option (while keeping the extension active if loaded)
+    "disable_image_button": True,
+    
     # Style customization
     "inject_css": True,                 # Auto-injects default CSS styles when rendering HTML
     "css_class": "tiptap-content",      # The wrapper CSS class name

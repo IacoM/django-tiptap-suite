@@ -22,6 +22,7 @@ A modern, high-quality, and feature-complete rich text editor for Django based o
 - 📝 **Task Lists**: Add checkbox task lists for interactive notes.
 - 🔠 **Underline & Text Align**: Format text with underline and align left, center, right, or justify.
 - 🖥️ **Fullscreen Mode**: Switch the editor to screen-filling focus mode with a single click.
+- 🧹 **Clear Formatting & Spacing Correction**: Remove all styles, headers, links, and lists from a selection with a single click, and automatically correct common punctuation spacing typos (e.g. inserting spaces after commas).
 - 🎨 **Dark Mode Native**: Automatically detects and adapts to the Django Admin light/dark modes.
 - 🖼️ **CSRF-Safe Local Image Uploads**: Secure drag-and-drop & file uploads with file size limit validation and configurable date-based directory paths.
 - ⚙️ **Zero Configuration**: Works out of the box with standard Django forms and model fields.
@@ -120,6 +121,9 @@ TIPTAP_SUITE_CONFIG = {
     
     # Hide the '/' slash commands menu entirely
     "disable_slash_commands": False,
+    
+    # Hide the image button/upload option (keeps the extension active if loaded)
+    "disable_image_button": False,
     
     # Style customization
     "inject_css": True,                 # Auto-injects default CSS styles when rendering HTML

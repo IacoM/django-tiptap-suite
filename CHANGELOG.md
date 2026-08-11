@@ -7,24 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.6] - 2026-08-11
+
+### Added
+- **disable_image_button**: New configuration option in `TIPTAP_SUITE_CONFIG` to disable and hide the image upload button (from toolbar and slash commands menu).
+- **Clear Formatting**: Added a button to the toolbar (and a slash command) to quickly clear inline formatting and block styles on the selection.
+- **Punctuation Spacing Correction**: The clear formatting function now automatically fixes comma spacing typos by inserting a space after commas (except for decimals).
+
 ## [1.0.5] - 2026-07-27
 
 ### Fixed
-- **JSON Serialization**: Corretta la serializzazione della configurazione del widget in formato JSON valido prima di inviarla al template HTML, risolvendo il problema di visualizzazione dell'editor in presenza di liste o booleani in `TIPTAP_SUITE_CONFIG`.
+- **JSON Serialization**: Fixed widget configuration serialization to valid JSON format before sending to HTML template, resolving editor display issues when list or boolean types are present in `TIPTAP_SUITE_CONFIG`.
 
 ## [1.0.4] - 2026-07-27
 
 ### Added
-- **Dynamic Configuration (Proxy)**: Introduzione di un recupero dinamico dei settings tramite Proxy in `conf.py` (utile anche per i test di unità).
-- **Nuove Estensioni Tiptap**: Supporto a Tabelle, Task List, Underline e Text Align.
-- **Modalità Fullscreen**: Bottone dedicato per estendere l'editor a tutto schermo.
-- **Validazione grandezza e percorsi dinamici immagini**: Supporto a `image_max_size` e `image_upload_path` (con cartelle basate su data) in `views.py`.
-- **Test di unità**: Aggiunti e corretti test in `tests/test_views.py` per testare le nuove funzionalità.
+- **Dynamic Configuration (Proxy)**: Introduced dynamic retrieval of settings via Proxy in `conf.py` (useful for unit testing).
+- **New Tiptap Extensions**: Support for Tables, Task Lists, Underline, and Text Align.
+- **Fullscreen Mode**: Dedicated button to expand the editor to fullscreen.
+- **Dynamic Image Size & Path Validation**: Support for `image_max_size` and date-based `image_upload_path` in `views.py`.
+- **Unit Tests**: Added and fixed tests in `tests/test_views.py` to cover new features.
 
 ## [1.0.3] - 2026-07-27
 
 ### Added
-- Aggiunto frontend per test dell'editor.
+- Added frontend for editor testing.
 
 ## [1.0.0] - 2026-07-24
 

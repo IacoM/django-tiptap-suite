@@ -46,12 +46,13 @@ const icons = {
   table: '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>',
   taskList: '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="6" height="6" rx="1"></rect><rect x="3" y="13" width="6" height="6" rx="1"></rect><line x1="12" y1="8" x2="21" y2="8"></line><line x1="12" y1="16" x2="21" y2="16"></line></svg>',
   fullscreen: '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>',
+  eraser: '<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"></path><path d="M22 21H7"></path><path d="m5 11 9 9"></path></svg>',
 };
 
 const getIconSvg = (name) => icons[name] || '';
 
 // Create custom Slash Commands extension
-const getCommands = ({ uploadUrl, csrfToken, enabledExtensions }) => {
+const getCommands = ({ uploadUrl, csrfToken, enabledExtensions, disableImageButton }) => {
   const list = [
     {
       id: 'heading',
@@ -180,8 +181,20 @@ const getCommands = ({ uploadUrl, csrfToken, enabledExtensions }) => {
         fileInput.click();
       },
     },
+    {
+      id: 'clearFormatting',
+      title: 'Clear Formatting',
+      description: 'Remove all text styles',
+      icon: 'eraser',
+      command: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).clearNodes().unsetAllMarks().run();
+      },
+    },
   ];
-  return list.filter(item => enabledExtensions.includes(item.id) || item.id === 'divider');
+  return list.filter(item => {
+    if (item.id === 'image' && disableImageButton) return false;
+    return enabledExtensions.includes(item.id) || item.id === 'divider' || item.id === 'clearFormatting';
+  });
 };
 
 const SlashCommands = Extension.create({
@@ -422,7 +435,7 @@ window.initTiptapSuite = function(editorId, uploadUrl, csrfToken, config) {
       label: 'Link'
     });
   }
-  if (enabledExtensions.includes('image')) {
+  if (enabledExtensions.includes('image') && !config.disable_image_button) {
     buttons.push({ 
       icon: 'image', 
       action: () => {
@@ -471,6 +484,23 @@ window.initTiptapSuite = function(editorId, uploadUrl, csrfToken, config) {
       label: 'Table' 
     });
   }
+  
+  // Clear Formatting button is always present
+  buttons.push({
+    icon: 'eraser',
+    action: () => {
+      editor.chain().focus().clearNodes().unsetAllMarks().run();
+      const { from, to } = editor.state.selection;
+      if (from !== to) {
+        const text = editor.state.doc.textBetween(from, to, '\n');
+        const correctedText = text.replace(/,([^\s\d])/g, ', $1');
+        if (text !== correctedText) {
+          editor.chain().focus().insertContentAt({ from, to }, correctedText).run();
+        }
+      }
+    },
+    label: 'Clear Formatting'
+  });
 
   // Fullscreen button is always present
   buttons.push({
@@ -590,7 +620,7 @@ window.initTiptapSuite = function(editorId, uploadUrl, csrfToken, config) {
       SlashCommands.configure({
         suggestion: {
           items: ({ query }) => {
-            const list = getCommands({ uploadUrl, csrfToken, enabledExtensions });
+            const list = getCommands({ uploadUrl, csrfToken, enabledExtensions, disableImageButton: config.disable_image_button });
             return list.filter(item => item.title.toLowerCase().startsWith(query.toLowerCase()));
           },
           render: renderItems,
