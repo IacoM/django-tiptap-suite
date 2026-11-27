@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.8] - 2026-11-27
+
+### Fixed
+- **CSRF Token for Image Uploads**: Fixed image uploads failing with `Forbidden (CSRF token from the 'X-Csrftoken' HTTP header has incorrect length.)`. Form widgets are rendered without the request context, so `{{ csrf_token }}` was always empty in the widget template. The token is now read client-side from the enclosing form's `csrfmiddlewaretoken` input, then from any such input on the page, and finally from the CSRF cookie (respecting `CSRF_COOKIE_NAME`). Works with `CSRF_COOKIE_HTTPONLY` and `CSRF_USE_SESSIONS` as long as the form includes `{% csrf_token %}`.
+- **Widget Rendering Test**: Fixed `test_widget_rendering`, which looked for the version label in the server-rendered HTML although it is rendered client-side; it now checks the `version` passed in the widget configuration.
+
 ## [1.0.7] - 2026-08-11
 
 ### Added

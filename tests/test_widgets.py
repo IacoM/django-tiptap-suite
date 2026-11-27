@@ -12,7 +12,8 @@ def test_widget_rendering():
     assert 'window.initTiptapSuite' in html
     assert 'test-editor' in html
     assert '"placeholder": "Write something..."' in html
-    assert f'django-tiptap-suite v{__version__}' in html
+    # The "django-tiptap-suite vX.Y.Z" label is rendered client-side from config.version
+    assert f'"version": "{__version__}"' in html
 
 def test_widget_csrf_token_lookup(settings):
     settings.CSRF_COOKIE_NAME = "custom_csrf"
