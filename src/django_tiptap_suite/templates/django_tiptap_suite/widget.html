@@ -10,12 +10,28 @@
 
 <script>
   (function() {
+    // Widgets are rendered without the request context, so {{ csrf_token }}
+    // is not available here: read the token from the page instead.
+    function getCSRFToken() {
+      const wrapper = document.getElementById('wrapper-{{ widget.attrs.id|escapejs }}');
+      const selector = 'input[name="csrfmiddlewaretoken"]';
+      const form = wrapper && wrapper.closest('form');
+      const input = (form && form.querySelector(selector)) || document.querySelector(selector);
+      if (input && input.value) { return input.value; }
+
+      const cookieName = '{{ widget.csrf_cookie_name|default:"csrftoken"|escapejs }}';
+      const cookie = document.cookie.split('; ').find(row => row.startsWith(cookieName + '='));
+      if (cookie) { return decodeURIComponent(cookie.substring(cookieName.length + 1)); }
+
+      console.error('django-tiptap-suite: CSRF token not found in form or cookie');
+      return '';
+    }
     function init() {
       if (window.initTiptapSuite) {
         window.initTiptapSuite(
           '{{ widget.attrs.id }}', 
           '{% url "django_tiptap_suite:upload_image" %}',
-          '{{ csrf_token }}',
+          getCSRFToken(),
           {{ widget.config|default:"{}"|safe }}
         );
       }
