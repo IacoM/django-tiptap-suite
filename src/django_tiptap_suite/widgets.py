@@ -1,5 +1,6 @@
 import json
 from django import forms
+from django.conf import settings
 from django.forms.widgets import Media
 from .conf import TIPTAP_SUITE_CONFIG
 
@@ -24,4 +25,5 @@ class TiptapEditorWidget(forms.Widget):
         config_with_version = {**self.config, "version": __version__}
         context["widget"]["config"] = json.dumps(config_with_version)
         context["widget"]["version"] = __version__
+        context["widget"]["csrf_cookie_name"] = settings.CSRF_COOKIE_NAME
         return context

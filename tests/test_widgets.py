@@ -14,6 +14,13 @@ def test_widget_rendering():
     assert '"placeholder": "Write something..."' in html
     assert f'django-tiptap-suite v{__version__}' in html
 
+def test_widget_csrf_token_lookup(settings):
+    settings.CSRF_COOKIE_NAME = "custom_csrf"
+    html = TiptapEditorWidget(attrs={"id": "editor"}).render("content", "")
+    assert "input[name=\"csrfmiddlewaretoken\"]" in html
+    assert "wrapper-editor" in html
+    assert "const cookieName = 'custom_csrf';" in html
+
 def test_widget_media():
     widget = TiptapEditorWidget()
     media = widget.media

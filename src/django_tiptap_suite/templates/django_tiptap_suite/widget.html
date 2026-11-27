@@ -10,19 +10,21 @@
 
 <script>
   (function() {
+    // Widgets are rendered without the request context, so {{ csrf_token }}
+    // is not available here: read the token from the page instead.
     function getCSRFToken() {
-      let token = '{{ csrf_token|escapejs }}';
-      if (token && token.trim() !== '') { return token; }
+      const wrapper = document.getElementById('wrapper-{{ widget.attrs.id|escapejs }}');
+      const selector = 'input[name="csrfmiddlewaretoken"]';
+      const form = wrapper && wrapper.closest('form');
+      const input = (form && form.querySelector(selector)) || document.querySelector(selector);
+      if (input && input.value) { return input.value; }
 
-      const input = document.querySelector('input[id="csrftoken"]');
-      if (input && input.value) {return input.value;}
+      const cookieName = '{{ widget.csrf_cookie_name|default:"csrftoken"|escapejs }}';
+      const cookie = document.cookie.split('; ').find(row => row.startsWith(cookieName + '='));
+      if (cookie) { return decodeURIComponent(cookie.substring(cookieName.length + 1)); }
 
-      const cookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-
-      if (cookie) {return decodeURIComponent(cookie.split('=').slice(1).join('=')); }
-
-      console.error("CSRF not found in form or cookie")
-      return 'CSRF NOT FOUND';
+      console.error('django-tiptap-suite: CSRF token not found in form or cookie');
+      return '';
     }
     function init() {
       if (window.initTiptapSuite) {
