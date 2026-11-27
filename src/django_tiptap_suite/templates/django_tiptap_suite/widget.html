@@ -10,12 +10,26 @@
 
 <script>
   (function() {
+    function getCSRFToken() {
+      let token = '{{ csrf_token|escapejs }}';
+      if (token && token.trim() !== '') { return token; }
+
+      const input = document.querySelector('input[id="csrftoken"]');
+      if (input && input.value) {return input.value;}
+
+      const cookie = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
+
+      if (cookie) {return decodeURIComponent(cookie.split('=').slice(1).join('=')); }
+
+      console.error("CSRF not found in form or cookie")
+      return 'CSRF NOT FOUND';
+    }
     function init() {
       if (window.initTiptapSuite) {
         window.initTiptapSuite(
           '{{ widget.attrs.id }}', 
           '{% url "django_tiptap_suite:upload_image" %}',
-          '{{ csrf_token }}',
+          getCSRFToken(),
           {{ widget.config|default:"{}"|safe }}
         );
       }
